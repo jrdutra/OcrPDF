@@ -101,6 +101,7 @@ class OcrReader:
     def generate_ocr(self, current_dir):
         texto = ocr.image_to_string(Image.open(current_dir), lang='por')
         arq = open(current_dir + ".txt", "w")
+        texto = texto.strip()
         arq.write(texto)
         arq.close()
 
@@ -120,11 +121,12 @@ class OcrReader:
                     # se nao existir o .txt com texto, cria
                     if os.path.isfile(current_dir + ".txt") == 0:
                         self.qt_lida += 1
-                        print("Converting: " + "[" + str(self.qt_lida) +
-                              " from " + str(self.qt_arq) + "]" + current_dir)
+                        print("Converting " + img_extension + " to txt[" + str(self.qt_lida) +
+                              " from " + str(self.qt_arq) + "] | DIR: " + current_dir)
                         self.generate_ocr(current_dir)
                         self.current_data.json_img_txt_details_conversion(
                             self.qt_arq, self.qt_lida, current_dir)
+        self.qt_arq = 0
 
     def convert_all_pdf_to_jpg(self):
         self.qt_lida = 0
@@ -139,8 +141,9 @@ class OcrReader:
                     # se nao existir o .txt com texto, cria
                     if os.path.exists(current_dir[0:-4]) == 0:
                         self.qt_lida += 1
-                        print("Convertendo[" + str(self.qt_lida) +
-                              " from " + str(self.qt_arq) + "] " + current_dir)
+                        print("Converting pdf to jpg [" + str(self.qt_lida) +
+                              " from " + str(self.qt_arq) + "] | DIR: " + current_dir)
                         self.convert_pdf_to_jpg(path, name)
                         self.current_data.json_img_txt_details_conversion(
                             self.qt_arq, self.qt_lida, current_dir)
+        self.qt_arq = 0
