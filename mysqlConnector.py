@@ -13,7 +13,7 @@ class MysqlConnector:
         except mysql.connector.Error as err:
             print("MYSQL conection error: : {}".format(err))
         finally:
-            print("Can't conect to mysql database...")
+            print("MySql...")
     
     def record(self, _path, _text):
         mycursor = self.mydb.cursor()
