@@ -9,3 +9,12 @@ class MysqlConnector:
                 password = _pass,
                 database = _dataBase
         )
+    
+    def record(self, _path, _text):
+        mycursor = self.mydb.cursor()
+
+        sql = "INSERT INTO record (path, text) VALUES (%s, %s)"
+        val = (_path, _text)
+        
+        mycursor.execute(sql, val)
+        self.mydb.commit()

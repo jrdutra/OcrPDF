@@ -3,7 +3,7 @@ from ocrReader import OcrReader
 
 def main():
     print("Iniciando...")
-    ocr = OcrReader("./teste")
+    ocr = OcrReader("./teste", "127.0.0.1","jrdutra", "1234", "ocrpmm")
     #print(str(ocr.get_quantity_pdf_exists()))
     #print(str(ocr.get_quantity_img_exists("jpg")))
     #ocr.convert_pdf_to_jpg("./teste", "(LC-223-2013)_LC 223-2013.pdf")

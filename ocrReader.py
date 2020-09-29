@@ -4,17 +4,19 @@ import os.path
 import pytesseract as ocr
 from PIL import Image
 from jsonFile import JsonFile
+from mysqlConnector import MysqlConnector
 from pdf2image import convert_from_path
 
 
 class OcrReader:
 
-    def __init__(self, _root):
+    def __init__(self, _root, _host, _user, _pass, _dataBase):
         self.root = _root
         self.qt_arq = 0
         self.qt_lida = 0
         self.porcento = 0
         self.current_data = JsonFile("current_data")
+        self.mysqlConnector = MysqlConnector(_host, _user, _pass, _dataBase)
 
     #------------------------------------------------------------
     #  CONTADORES, tanto de imagens, quanto de PDFs
@@ -102,8 +104,11 @@ class OcrReader:
         texto = ocr.image_to_string(Image.open(current_dir), lang='por')
         arq = open(current_dir + ".txt", "w")
         texto = texto.strip()
+        #Record in a text file
         arq.write(texto)
         arq.close()
+        #record in the database
+        self.mysqlConnector.record(current_dir, texto)
 
     #------------------------------------------------------------
     #  EXECUTORES DE DIRETORIOS COMPLETOS
