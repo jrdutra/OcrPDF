@@ -75,11 +75,11 @@ class OcrReader:
 
     def convert_pdf_to_jpg(self, filePath, fileName):
         try:
-            #Lê arquivo pdf do diretorio passado
-            pages = convert_from_path(filePath + "/" + fileName, 500)
-            #corre todas as páginas do arquivo convetendo
+            #Le arquivo pdf do diretorio passado
+            pages = convert_from_path(filePath + "/" + fileName, 100, grayscale=True)
+            #corre todas as paginas do arquivo convetendo
             for index, page in enumerate(pages, start=0):
-                #cria o nome do novo diretorio onde serão salvas as imagens, sem espaço
+                #cria o nome do novo diretorio onde serao salvas as imagens, sem espaço
                 pagesDirectory = fileName[0:-4].replace(" ", "_").replace(".PDF", ".pdf")
                 #renomeia o arquivo pdf original substituindo os espaços
                 os.rename(filePath + "/" + fileName, filePath + "/" + fileName.replace(" ", "_"))
@@ -92,10 +92,10 @@ class OcrReader:
                 #Testa se o arquivo não existe
                 imgPageName = filePath + "/" + pagesDirectory + "/" +str(index) + '.jpg'
                 if os.path.isfile(imgPageName) == 0:
-                    print("pág. " + str(index))
+                    print("  pág. " + str(index))
                     page.save(imgPageName, 'JPEG')
         except:
-            print("Arquivo não encontrado: " + filePath + "/" + fileName)
+            print("  Arquivo não encontrado: " + filePath + "/" + fileName)
 
     #------------------------------------------------------------
     #  GERADOR DE OCR - Recebe o diretório da imagem e gera
